@@ -1,0 +1,36 @@
+{
+  "name": "members-only",
+  "version": "1.0.0",
+  "description": "Excluse clubhouse, a user authentication express project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devstart": "nodemon app.js",
+    "tailwindwatch": "npx tailwindcss -i ./input.css -o ./public/stylesheets/output.css --watch"
+  },
+  "keywords": [
+    "Express",
+    "Passportjs",
+    "Tailwind",
+    "Node"
+  ],
+  "author": "Kiwasthal",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-mongo": "^4.6.0",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.14.2",
+    "moment": "^2.29.4",
+    "mongoose": "^6.5.2",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "tailwindcss": "^3.1.8"
+  }
+}
