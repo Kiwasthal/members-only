@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%-include('./partial/head.ejs') %>
+  <body>
+    <%-include('./partial/unauthnav.ejs') %>
+    <div class="pt-12 pr-28 pl-28">
+      <form method="post" action="">
+        <div class="relative z-0 mb-6 w-full group">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer"
+            placeholder=" "
+            required=""
+          />
+          <label
+            for="username"
+            class="font-main peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:font-main"
+            >Username</label
+          >
+          <% if (typeof message !== 'undefined') { %>
+          <span class="text-sm text-red-500">* <%=message %></span>
+          <% } %>
+        </div>
+        <div class="relative z-0 mb-6 w-full group">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="font-main block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 peer peer"
+            placeholder=" "
+            required=""
+          />
+          <label
+            for="password"
+            class="font-main peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >Password</label
+          >
+        </div>
+        <button
+          type="submit"
+          class="text-white bg-gray-700 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </body>
+</html>
