@@ -98,9 +98,15 @@ exports.user_create_post = [
 ];
 
 exports.user_login_get = (req, res, next) => {
+  let errM = req.flash('message');
+  console.log(errM[0]);
   if (!req.user)
     res.render('user_login_form', {
       title: 'Log-in',
+      error:
+        typeof errM[0] === 'undefined'
+          ? ''
+          : { message: errM[0], code: errM[0] === 'User not found' ? 1 : 2 },
     });
   else res.redirect('/messages');
 };
@@ -108,7 +114,7 @@ exports.user_login_get = (req, res, next) => {
 exports.user_login_post = passport.authenticate('local', {
   failureRedirect: '/users/login',
   successRedirect: '/',
-  failureMessage: true,
+  failureFlash: true,
 });
 
 exports.user_logout_get = (req, res, next) => {

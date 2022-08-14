@@ -7,6 +7,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const mongooseClient = require('./config/database');
 const passport = require('passport');
+const flash = require('connect-flash');
 
 // ---- GENERAL SETUP
 
@@ -18,6 +19,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ---- SESSION SETUP
