@@ -8,6 +8,8 @@ const MongoStore = require('connect-mongo');
 const mongooseClient = require('./config/database');
 const passport = require('passport');
 const flash = require('connect-flash');
+const compression = require('compression');
+const helmet = require('helmet');
 
 // ---- GENERAL SETUP
 
@@ -17,8 +19,11 @@ require('dotenv').config();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(helmet());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression());
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
