@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const { body, validationResult, check } = require('express-validator');
 const passport = require('passport');
+require('dotenv').config();
 
 exports.user_create_get = (req, res, next) => {
   if (!req.user) res.render('user_create_form', { title: 'Sign-Up' });
@@ -74,7 +75,8 @@ exports.user_create_post = [
     console.log(errors);
 
     let user = new User({
-      membershipStatus: 'member',
+      membershipStatus:
+        req.body.password === process.env.ADMIN_PASS ? 'admin' : 'member',
       password: req.body.password,
       username: req.body.username,
       firstname: req.body.firstname,
@@ -91,7 +93,7 @@ exports.user_create_post = [
     } else {
       user.save(err => {
         if (err) return next(err);
-        res.redirect('/messages');
+        res.redirect('/users/login');
       });
     }
   },

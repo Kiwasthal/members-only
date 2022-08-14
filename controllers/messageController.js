@@ -9,6 +9,8 @@ exports.index = (req, res, next) => {
     .exec((err, messages) => {
       if (err) return next(err);
       if (!req.user) res.render('index', { title: 'Home', messages });
+      else if (req.user.membershipStatus === 'admin')
+        res.render('clubhouse', { title: 'Home', messages, admin: true });
       else res.render('clubhouse', { title: 'Club-House', messages });
     });
 };
@@ -56,3 +58,20 @@ exports.message_create_post = [
     });
   },
 ];
+
+exports.message_delete_get = (req, res, next) => {
+  if (req.user.membershipStatus !== 'admin') res.redirect('/');
+  Message.findById(req.params.id)
+    .populate('author')
+    .exec((err, message) => {
+      if (err) return next(err);
+      res.render('message_delete', { title: 'Delete Message', message });
+    });
+};
+
+exports.message_delete_post = (req, res, next) => {
+  Message.findByIdAndRemove(req.body.messageid, function deleteMessage(err) {
+    if (err) return next(err);
+    res.redirect('/');
+  });
+};
