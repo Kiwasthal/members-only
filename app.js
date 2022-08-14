@@ -12,7 +12,7 @@ const compression = require('compression');
 const helmet = require('helmet');
 
 // ---- GENERAL SETUP
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000; //Heroku port
 
 const app = express();
 require('dotenv').config();
