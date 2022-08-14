@@ -11,37 +11,67 @@ exports.user_create_post = [
   body('username', 'Username must not be empty')
     .trim()
     .isLength({ max: 20 })
-    .withMessage('User Name is too long')
+    .withMessage({
+      errCode: 1,
+      errMsg: 'User Name is too long',
+    })
     .escape(),
   body('password', 'Password must not be empty')
-    .trim()
     .isLength({ min: 6 })
-    .withMessage('Password is too short')
+    .withMessage({
+      errCode: 2,
+      errMsg: 'Password is too short',
+    })
     .isLength({ max: 20 })
-    .withMessage('Password is too long')
+    .withMessage({
+      errCode: 2,
+      errMsg: 'Password is too long',
+    })
     .escape(),
   body('firstname', 'First name must not be empty')
     .trim()
     .isLength({ max: 20 })
-    .withMessage('First name is too long')
+    .withMessage({
+      errCode: 3,
+      errMsg: 'First name is too long',
+    })
     .escape(),
   body('lastname', 'Last name must not be empty')
     .trim()
     .isLength({ max: 20 })
-    .withMessage('Last name is too long')
+    .withMessage({
+      errCode: 4,
+      errMsg: 'Last name is too long',
+    })
     .escape(),
   check('username')
     .custom(value => !/\s/.test(value))
-    .withMessage('No spaces are allowed in the username'),
+    .withMessage({
+      errCode: 1,
+      errerrMsg: 'No spaces are allowed in the username',
+    })
+    .custom(async value => {
+      return User.findOne({ username: value }).then(user => {
+        if (user)
+          return Promise.reject({
+            errCode: 1,
+            errMsg: 'Username already in use',
+          });
+      });
+    }),
   check('password')
     .exists()
     .custom(value => !/\s/.test(value))
-    .withMessage('No spaces are allowed in the password'),
-  check('repeat_password', 'Passwords do not match')
+    .withMessage({
+      errCode: 2,
+      errMsg: 'No spaces are allowed in the password',
+    }),
+  check('repeat_password', { errCode: 2, errMsg: 'Passwords do not match' })
     .exists()
     .custom((value, { req }) => value === req.body.password),
   (req, res, next) => {
     let errors = validationResult(req);
+    console.log(errors);
 
     let user = new User({
       membershipStatus: 'member',
@@ -51,22 +81,19 @@ exports.user_create_post = [
       lastname: req.body.lastname,
     });
 
-    User.findOne({ username: req.body.username }).exec((err, existingUser) => {
-      if (!errors.isEmpty() || existingUser) {
-        res.render('user_create_form', {
-          title: 'Sign-Up',
-          errors: errors.array(),
-          exerr: existingUser ? 'Username already exists' : null,
-          user,
-        });
-        return;
-      } else {
-        user.save(err => {
-          if (err) return next(err);
-          res.redirect('/messages');
-        });
-      }
-    });
+    if (!errors.isEmpty()) {
+      res.render('user_create_form', {
+        title: 'Sign-Up',
+        errors: errors.array(),
+        user,
+      });
+      return;
+    } else {
+      user.save(err => {
+        if (err) return next(err);
+        res.redirect('/messages');
+      });
+    }
   },
 ];
 

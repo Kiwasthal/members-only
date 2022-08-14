@@ -38,6 +38,7 @@ app.use(
 );
 
 //---- PASSPORT AUTHENTICATION
+
 require('./config/passport');
 
 app.use(passport.initialize());

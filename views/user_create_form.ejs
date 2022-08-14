@@ -18,11 +18,12 @@
           <label
             for="username"
             class="font-main peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:font-main"
-            >Username</label
-          >
-          <% if (typeof exerr !== 'undefined') { %> <% if (exerr) { %>
-          <span class="text-sm text-red-500">* <%= exerr %> </span>
-          <%} %> <% } %>
+            >Username
+          </label>
+          <% if (typeof errors !== 'undefined') { %> <% errors.forEach(error =>
+          { %> <% if (error.msg.errCode === 1 ) { %>
+          <span class="text-sm text-red-500">* <%= error.msg.errMsg %> </span>
+          <%} %> <% }) %> <% } %>
         </div>
         <div class="relative z-0 mb-6 w-full group">
           <input
@@ -36,14 +37,11 @@
           <label
             for="password"
             class="font-main peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >Password</label
-          >
+            >Password
+          </label>
           <% if (typeof errors !== 'undefined') { %> <% errors.forEach(error =>
-          { %> <% if (error.msg === 'No spaces are allowed in the password') {
-          %>
-          <span class="text-sm text-red-500"
-            >* No spaces are allowed in the password</span
-          >
+          { %> <% if (error.msg.errCode === 2 ) { %>
+          <span class="text-sm text-red-500">* <%= error.msg.errMsg %> </span>
           <%} %> <% }) %> <% } %>
         </div>
         <div class="relative z-0 mb-6 w-full group">
@@ -75,8 +73,13 @@
             <label
               for="firstname"
               class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >First name</label
-            >
+              >First name
+            </label>
+
+            <% if (typeof errors !== 'undefined') { %><% errors.forEach(error =>
+            { %> <% if (error.msg.errCode === 3 ) { %>
+            <span class="text-sm text-red-500">* <%= error.msg.errMsg %> </span>
+            <%} %> <% }) %> <% } %>
           </div>
           <div class="relative z-0 mb-6 w-full group">
             <input
@@ -91,8 +94,12 @@
             <label
               for="lastname"
               class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Last name</label
-            >
+              >Last name
+            </label>
+            <% if (typeof errors !== 'undefined') { %><% errors.forEach(error =>
+            { %> <% if (error.msg.errCode === 4 ) { %>
+            <span class="text-sm text-red-500">* <%= error.msg.errMsg %> </span>
+            <%} %> <% }) %> <% } %>
           </div>
         </div>
 
@@ -103,9 +110,6 @@
           Submit
         </button>
       </form>
-      <% if (typeof errors !== 'undefined') { %> <% errors.forEach(error => { %>
-      <span class="text-sm text-red-500">* <%= error.msg %> </span>
-      <% }) %> <% } %>
     </div>
   </body>
 </html>
