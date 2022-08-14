@@ -65,3 +65,6 @@ app.use('/messages', messageRouter);
 app.use('/users', userRouter);
 
 app.listen(process.env.PORT, () => console.log('Listening on port '));
+
+let str = 'hjohaohfo';
+str.toUpperCase();
