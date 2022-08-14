@@ -12,6 +12,7 @@ const compression = require('compression');
 const helmet = require('helmet');
 
 // ---- GENERAL SETUP
+const port = process.env.PORT || 3000;
 
 const app = express();
 require('dotenv').config();
@@ -64,7 +65,4 @@ app.use('/', indexRouter);
 app.use('/messages', messageRouter);
 app.use('/users', userRouter);
 
-app.listen(process.env.PORT, () => console.log('Listening on port '));
-
-let str = 'hjohaohfo';
-str.toUpperCase();
+app.listen(port, () => console.log('Listening on port '));
